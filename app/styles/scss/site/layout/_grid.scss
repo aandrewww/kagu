@@ -1,0 +1,81 @@
+/* ===========================
+   Container
+   =========================== */
+
+// Set Grid (1170gs default)
+$column-width: 70px;
+$gutter: 30px;
+$columns: 12;
+$padding: $gutter / 2;
+// Should it be responsive?
+$responsive: true;
+
+
+// breakpoints
+$breakpoint-small: "only screen and (min-width: 20em)";
+$breakpoint-medium: "only screen and (min-width: 30em)";
+
+
+*, *:after, *:before {
+	margin: 0;
+	padding: 0;
+	@include border-box;
+}
+
+img {
+	width: auto;
+	max-width: 100%;
+	height: auto !important;
+}
+
+
+@media #{$breakpoint-medium} {
+
+	// Set container width relative to user variables
+	$width: ($column-width * $columns) + ($gutter * ($columns - 1));
+
+	// Set Base Container
+	.container{
+		// Set container width if responsive
+		@if $responsive == true{
+			max-width: $width;
+			padding: 0 $padding 0 $padding;
+		}@else{
+			width: $width;
+			padding: 0;
+		}
+		margin: 0px auto;
+		.row{
+			@extend %clearfix;
+			> :first-child{
+				margin-left: 0;
+			}
+		}
+
+		// Define Individual Grid Classes
+		@for $i from 1 to $columns{
+			// Calculate grid size in pixels
+			$grid: ($column-width * $i) + ($gutter * ($i - 1));
+
+			// Calculate responsive grid sizes if required
+			@if $responsive == true{
+				// Calculate grid size in pixels
+				$grid: ($grid / $width) * 100%;
+				// Get Gutter Percentage for Grids
+				$gutter-percentage: ($gutter / $width) * 100%;
+				.col#{$i}{
+					width: $grid;
+					float: left;
+					margin-left: $gutter-percentage;
+				}
+			}@else{
+				$grid: $grid;
+				.col#{$i}{
+					width: $grid;
+					float: left;
+					margin-left: $gutter;
+				}
+			}
+		}
+	}
+}
