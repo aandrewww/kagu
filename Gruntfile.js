@@ -210,6 +210,24 @@ module.exports = function(grunt) {
 			},
 		},
 
+		htmlmin: {
+			dist: {
+				options: {
+					collapseWhitespace: true,
+					conservativeCollapse: true,
+					collapseBooleanAttributes: true,
+					removeCommentsFromCDATA: true,
+					removeOptionalTags: true
+				},
+				files: [{
+					expand: true,
+					cwd: '<%= appConfig.dist %>',
+					src: ['*.html', 'views/{,*/}*.html'],
+					dest: '<%= appConfig.dist %>'
+				}]
+			}
+		},
+
 		// Copies remaining files to places other tasks can use
 		copy: {
 			dist: {
@@ -261,6 +279,7 @@ module.exports = function(grunt) {
 	    'uglify',
 	    'filerev',
 	    'usemin',
+	    'htmlmin',
 	    'connect:server:keepalive',
 	    'notify:production',
 	]);
