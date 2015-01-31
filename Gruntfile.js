@@ -63,8 +63,8 @@ module.exports = function(grunt) {
 					middleware: function (connect) {
 						return [
 							connect().use(
-								'/bower_components',
-								connect.static('./bower_components')
+								'/app/vendor',
+								connect.static('./vendor')
 							),
 							connect.static(appConfig.app)
 						];
